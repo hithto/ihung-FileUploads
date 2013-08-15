@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "Upload";
+}
+<script type="text/javascript">
+    $(function () {
+
+        $("#UploadForm").ajaxForm({
+            iframe: true,
+            dataType: "json",
+            success: function (result) {
+                $("#UploadForm").resetForm();
+                if (result.success) {
+                    toastr.success(result.message, 'Success Message')
+                }
+                else {
+                    toastr.error(result.message, 'Error Message')
+                }
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                $("#UploadForm").resetForm();
+                toastr.error('檔案上傳錯誤.', 'Error Message')
+            }
+        });
+    });
+</script>
+<h2>Upload</h2>
+<hr />
+
+<form id="UploadForm" action="@Url.Action("Upload")"  method="post"  enctype="multipart/form-data">
+    <label for="file">Filename:</label>
+    <input type="file" name="file" id="file" />
+    <input type="submit" />
+</form>
